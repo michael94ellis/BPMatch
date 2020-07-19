@@ -1,7 +1,6 @@
 import React from "react";
 
 const UserInput = (props) => {
-  console.log("DILDOOOS", props);
   return (
     <form className="input-field" onSubmit={props.handleSubmit}>
       <label className="active" for="first_name2">

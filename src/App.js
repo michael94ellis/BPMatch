@@ -8,21 +8,20 @@ const App = () => {
   const [sourceID, setSourceID] = useState();
   const [search, setSearch] = useState();
 
-  useEffect(() => {
-    
-  }, []);
-
   const handleChange = (event) => {
     setSearch(event.target.value);
-  }
+  };
 
-  const handleSubmit = event => {
-    event.preventDefault();   
-    API.bpmResults()
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    API.bpmLookup(search)
       .then((res) => {
-        console.log("SONG 1!!", res.data.tempo[0]);
-        console.log("SONG 2!!", res.data.tempo[1]);
+        console.log("SONG 1!!", res.data.search[0].id);
+        API.bpmResults(res.data.search[0].id).then((res) => {
+          console.log("***********",res.data.song.tempo)
+        });
       })
+
       .then(() => {
         API.musicVideoSearch(search).then((res) => {
           console.log("MUSIC VIDEO RESULTS!!", res.data.results[0]);
@@ -40,7 +39,11 @@ const App = () => {
   return (
     <div className="App">
       <VideoPlayer id={sourceID} />
-      <UserInput handleSubmit={handleSubmit} handleChange={handleChange} results={search}/>
+      <UserInput
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        results={search}
+      />
     </div>
   );
 };
