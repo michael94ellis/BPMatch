@@ -11,10 +11,16 @@ export default {
       `https://api.getsongbpm.com/song/?api_key=a2ac4e9276908567b494bc67129c5ccd&id=${id}`
     );
   },
-  musicVideoSearch: function (query) {
+  bpmMatch: function(bpm){
+    return axios.get(
+      `https://api.getsongbpm.com/tempo/?api_key=a2ac4e9276908567b494bc67129c5ccd&bpm=${bpm}`
+    );
+  },
+  musicVideoSearch: function (artist, song) {
+    console.log("TEST",artist, song)
     return axios({
       method: "GET",
-      url: `https://imvdb.com/api/v1/search/videos?q=${query}`,
+      url: `https://imvdb.com/api/v1/search/videos?q=${artist} ${song}`,
       headers: {
         "IMVDB-APP-KEY": "gKLRKM6um3XrLKXjtOhOeVBpQRf4cCNYcMaP4hBB",
         "Content-Type": "application/json",
