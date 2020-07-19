@@ -4,8 +4,9 @@ import VideoPlayer from "./components/videoPlayer";
 import "./App.css";
 import API from "./utils/API";
 
-function App() {
-  let sourceID;
+const App = () => {
+  const [sourceID, setSourceID] = useState();
+
 
   useEffect(() => {
     API.bpmResults()
@@ -22,17 +23,20 @@ function App() {
                 "**MUSIC VIDEO SOURCE",
                 res.data.sources[0].source_data
               );
-              sourceID = res.data.sources[0].source_data;
+              setSourceID(res.data.sources[0].source_data);
             })
         });
       });
   }, []);
 
-  return (
-    <div className="App">
-      <VideoPlayer/>
+
+
+    return (
+      <div className="App">
+      <VideoPlayer id={sourceID}/>
     </div>
   );
+
 }
 
 export default App;

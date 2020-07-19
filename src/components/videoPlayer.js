@@ -1,7 +1,7 @@
 import React from 'react';
 import YouTube from 'react-youtube';
 
-const VideoPlayer = () =>{
+const VideoPlayer = (props) =>{
     const opts = {
         height: '390',
         width: '640',
@@ -10,7 +10,7 @@ const VideoPlayer = () =>{
           autoplay: 1,
         }
     }
-    return <YouTube videoId="2g811Eo7K8U" opts={opts}/>
+    return <YouTube videoId= {props.id}opts={opts}/>
 }
 
 export default VideoPlayer;
