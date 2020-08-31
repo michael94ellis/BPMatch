@@ -8,18 +8,19 @@ const App = () => {
   const [audioID, setAudioID] = useState();
   const [search, setSearch] = useState("");
   const [videoID, setVideoID] = useState();
+  const [ready, setReady] = useState(0);
   const audioRef = useRef();
   const videoRef = useRef();
 
   const handleChange = (event) => {
     setSearch(event.target.value);
+    console.log(search)
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     API.bpmLookup(search).then((res) => {
-      console.log("SONG 1 title!!:  ", res.data.search[0].title);
-      console.log("SONG 1 artist!!: ", res.data.search[0].artist.name);
+      console.log("SONG 1 title!!:  ", res.data.search[0]);
 
       API.musicVideoSearch(
         res.data.search[0].artist.name,
@@ -27,7 +28,6 @@ const App = () => {
       ).then((res) => {
         console.log("MUSIC VIDEO RESULTS!!", res);
         API.musicVideoSource(res.data.results[0].id).then((res) => {
-          
           console.log("**MUSIC VIDEO SOURCE", res.data.sources[0].source_data);
           setAudioID(res.data.sources[0].source_data);
         });
@@ -35,9 +35,8 @@ const App = () => {
 
       API.bpmResults(res.data.search[0].id).then((res) => {
         API.bpmMatch(res.data.song.tempo).then((res) => {
-          let i = Math.floor(Math.random()*res.data.tempo.length)
-          console.log("~~~~~~~~~~~~~~", res.data.tempo);
-          console.log("***********", res.data.tempo[i].artist.name);
+          let i = Math.floor(Math.random() * res.data.tempo.length);
+          console.log("SONG 2: ", res.data.tempo[i]);
 
           API.musicVideoSearch(
             res.data.tempo[i].artist.name,
@@ -60,13 +59,13 @@ const App = () => {
   const stateChange = (event) => {
     console.log("State changed", event.target.getPlayerState());
     console.log(audioRef);
-    // if (event.target.getPlayerState() === 5) {
-    //   ready++;
-    //   console.log("TEST", ready)
-    //   if (ready === 2) {
-    //     event.target.playVideo();
-    //   }
-    // }
+    if (event.target.getPlayerState() === 5) {
+      setReady(ready+1)
+      console.log("TEST", ready);
+      if (ready === 2) {
+        event.target.playVideo();
+      }
+    }
   };
 
   return (

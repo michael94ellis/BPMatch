@@ -2,13 +2,14 @@ import React from "react";
 import YouTube from "react-youtube";
 
 const VideoPlayer = (props) => {
+  
   const onReady = (event) => {
     console.log("READY", event.target);
   };
 
-  const stateChange = (event)=>{
-    console.log("State changed",props.id, event.target.getPlayerState())
-  } 
+  // const stateChange = (event)=>{
+  //   console.log("State changed",props.id, event.target.getPlayerState())
+  // } 
 
   const onError = () => {
     console.log("ERROR");
