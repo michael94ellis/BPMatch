@@ -2,16 +2,16 @@ import React from "react";
 import YouTube from "react-youtube";
 
 export default class VideoPlayer extends React.Component {
-  
-  onReady = (event) => {
+
+  onReady(event) {
     console.log("READY", event.target);
   }
 
-  // const stateChange = (event) => {
-  //   console.log("State changed",props.id, event.target.getPlayerState())
-  // } 
+  stateChange = (event) => {
+    console.log("State changed", this.props.id, event.target.getPlayerState())
+  } 
 
-  onError = () => {
+  onError() {
     console.log("ERROR");
   }
 
@@ -23,14 +23,14 @@ export default class VideoPlayer extends React.Component {
       autoplay: 0,
     }
   }
-
+  
   render() {
-    return (
+    return ( 
       <YouTube
         videoId={this.props.id}
-        opts={opts}
-        onReady={onReady}
-        onError={onError}
+        opts={this.opts}
+        onReady={this.onReady}
+        onError={this.onError}
         onStateChange={this.props.stateChange}
       />
     )

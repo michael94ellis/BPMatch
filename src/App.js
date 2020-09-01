@@ -1,16 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import UserInput from "./components/UserInput";
 import VideoPlayer from "./components/videoPlayer";
 import "./App.css";
 import API from "./utils/API";
 
 const App = () => {
-  const [audioID, setAudioID] = useState();
   const [search, setSearch] = useState("");
+  const [audioID, setAudioID] = useState();
   const [videoID, setVideoID] = useState();
-  const [ready, setReady] = useState(0);
-  const audioRef = useRef();
-  const videoRef = useRef();
 
   const handleChange = (event) => {
     setSearch(event.target.value);
@@ -20,15 +17,15 @@ const App = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     API.bpmLookup(search).then((res) => {
-      console.log("SONG 1 title!!:  ", res.data.search[0]);
+      // console.log("SONG 1 title!!:  ", res.data.search[0]);
 
       API.musicVideoSearch(
         res.data.search[0].artist.name,
         res.data.search[0].title
       ).then((res) => {
-        console.log("MUSIC VIDEO RESULTS!!", res);
+        // console.log("MUSIC VIDEO RESULTS!!", res);
         API.musicVideoSource(res.data.results[0].id).then((res) => {
-          console.log("**MUSIC VIDEO SOURCE", res.data.sources[0].source_data);
+          // console.log("**MUSIC VIDEO SOURCE", res.data.sources[0].source_data);
           setAudioID(res.data.sources[0].source_data);
         });
       });
@@ -36,18 +33,18 @@ const App = () => {
       API.bpmResults(res.data.search[0].id).then((res) => {
         API.bpmMatch(res.data.song.tempo).then((res) => {
           let i = Math.floor(Math.random() * res.data.tempo.length);
-          console.log("SONG 2: ", res.data.tempo[i]);
+          // console.log("SONG 2: ", res.data.tempo[i]);
 
           API.musicVideoSearch(
             res.data.tempo[i].artist.name,
             res.data.tempo[i].song_title
           ).then((res) => {
-            console.log("MUSIC VIDEO RESULTS!!", res);
+            // console.log("MUSIC VIDEO RESULTS!!", res);
             API.musicVideoSource(res.data.results[0].id).then((res) => {
-              console.log(
-                "**MUSIC VIDEO SOURCE",
-                res.data.sources[0].source_data
-              );
+              // console.log(
+              //   "**MUSIC VIDEO SOURCE",
+              //   res.data.sources[0].source_data
+              // );
               setVideoID(res.data.sources[0].source_data);
             });
           });
@@ -55,18 +52,37 @@ const App = () => {
       });
     });
   };
+  
+  
+  const [audioRef, setAudioRef] = useState(null);
+  const [videoRef, setvideoRef] = useState(null);
 
-  const stateChange = (event) => {
+  const audioStateChange = (event) => {
     console.log("State changed", event.target.getPlayerState());
-    console.log(audioRef);
     if (event.target.getPlayerState() === 5) {
-      setReady(ready+1)
-      console.log("TEST", ready);
-      if (ready === 2) {
-        event.target.playVideo();
-      }
+      setAudioRef(event.target);
+      console.log("Audio Ref Set")
     }
   };
+
+  const videoStateChange = (event) => {
+    console.log("State changed", event.target.getPlayerState());
+    if (event.target.getPlayerState() === 5) {
+      setvideoRef(event.target);
+      console.log("Video Ref Set")
+    }
+  };
+
+  useEffect(() => {
+    console.log("Audio: " + (audioRef == null) + "Video: " + (videoRef == null));
+    if (audioRef != null && videoRef != null) {
+      videoRef.playVideo();
+      audioRef.playVideo();
+    }
+  });
+
+  const videoPlayer = <VideoPlayer id={videoID} stateChange={videoStateChange}/>
+  const audioPlayer = <VideoPlayer id={audioID} stateChange={audioStateChange}/>
 
   return (
     <div className="App">
@@ -75,8 +91,8 @@ const App = () => {
         handleChange={handleChange}
         results={search}
       />
-      <VideoPlayer id={audioID} stateChange={stateChange} ref={audioRef} />
-      <VideoPlayer id={videoID} stateChange={stateChange} />
+      {audioPlayer}
+      {videoPlayer}
     </div>
   );
 };
