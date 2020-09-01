@@ -57,6 +57,20 @@ const App = () => {
   const [audioRef, setAudioRef] = useState(null);
   const [videoRef, setvideoRef] = useState(null);
 
+  let audioSwitched = false;
+  const switchVideoAudio = () => {
+    audioSwitched = !audioSwitched;
+    if (audioRef != null && videoRef != null) {
+      if (audioSwitched) {  
+        audioRef.unMute();
+        videoRef.mute();
+      } else {  
+        videoRef.unMute();
+        audioRef.mute();
+      }
+    }
+  }
+
   const audioStateChange = (event) => {
     console.log("State changed", event.target.getPlayerState());
     if (event.target.getPlayerState() === 5) {
@@ -76,8 +90,11 @@ const App = () => {
   useEffect(() => {
     console.log("Audio: " + (audioRef == null) + "Video: " + (videoRef == null));
     if (audioRef != null && videoRef != null) {
+      console.log("Beginning videos");
       videoRef.playVideo();
       audioRef.playVideo();
+      audioSwitched = true;
+      switchVideoAudio();
     }
   });
 
@@ -90,6 +107,8 @@ const App = () => {
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         results={search}
+        switchAudio={switchVideoAudio}
+        checked={audioSwitched}
       />
       {audioPlayer}
       {videoPlayer}
