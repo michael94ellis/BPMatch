@@ -14,21 +14,12 @@ export default class VideoPlayer extends React.Component {
   onError() {
     console.log("ERROR");
   }
-
-  opts = {
-    height: "390",
-    width: "640",
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 0,
-    }
-  }
   
   render() {
     return ( 
       <YouTube
         videoId={this.props.id}
-        opts={this.opts}
+        opts={this.props.opts} 
         onReady={this.onReady}
         onError={this.onError}
         onStateChange={this.props.stateChange}
