@@ -1,6 +1,5 @@
 {
   "name": "bpmatch",
-  "homepage": "https://michael94ellis.github.com/michael94ellis/BPMatch",
   "version": "0.1.0",
   "proxy": "http://localhost:3001",
   "private": true,
@@ -11,8 +10,6 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.2",
     "express": "^4.16.3",
-    "gh-pages": "^3.1.0",
-    "git": "^0.1.5",
     "materialize-css": "^1.0.0-rc.2",
     "react": "^16.13.1",
     "react-bootstrap": "^1.3.0",
@@ -25,9 +22,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"

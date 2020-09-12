@@ -11,10 +11,10 @@ const UserInput = (props) => {
           value={props.results}
           id="userSearch"
           type="text"
-          className="input-search"
+          className="input-search search-bar-height"
           onChange={props.handleChange}
         />
-      <input type="submit" value="Search" className='search-button' />
+      <input type="submit" value="Submit" className='search-bar-height' />
     </div>
   );
 };
