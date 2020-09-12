@@ -6,7 +6,7 @@ const UserInput = (props) => {
     <div className='horizontal-box'>
       <form className="input-field" onSubmit={props.handleSubmit}>
       </form>
-      <img src={BPMLogo} className='bpmlogo bpm-logo-height' />
+      <img src={BPMLogo} alt='Site Logo' className='bpmlogo bpm-logo-height' />
       <input
           value={props.results}
           id="userSearch"

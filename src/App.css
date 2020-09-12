@@ -64,6 +64,7 @@ select:-webkit-autofill:focus {
   border-color: white;
   -webkit-text-fill-color: white;
   -webkit-box-shadow: 0 0 0 0 ;
+  box-shadow: 0 0 0 0 ;
   transition: background-color 5000s ease-in-out 0s;
 }
 

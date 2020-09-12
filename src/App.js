@@ -97,7 +97,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    console.log("Audio: " + (audioRef == null) + "Video: " + (videoRef == null));
+    console.log("Audio Ready: " + (audioRef == null) + ", Video Ready: " + (videoRef == null));
     if (audioRef != null && videoRef != null) {
       console.log("Beginning videos");
       videoRef.playVideo();
