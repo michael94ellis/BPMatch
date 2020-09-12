@@ -8,7 +8,7 @@ export default class VideoPlayer extends React.Component {
   }
 
   stateChange = (event) => {
-    console.log("State changed", this.props.id, event.target.getPlayerState())
+    console.log("State changed", this.props.id, event.target.getPlayerState());
   } 
 
   onError() {

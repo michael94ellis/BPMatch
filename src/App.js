@@ -13,7 +13,7 @@ const App = () => {
 
   const handleChange = (event) => {
     setSearch(event.target.value);
-    console.log(search)
+    console.log(search);
   };
 
   const handleSubmit = (event) => {
@@ -84,7 +84,7 @@ const App = () => {
     console.log("State changed", event.target.getPlayerState());
     if (event.target.getPlayerState() === 5) {
       setAudioRef(event.target);
-      console.log("Audio Ref Set")
+      console.log("Audio Ref Set");
     }
   };
 
@@ -92,7 +92,7 @@ const App = () => {
     console.log("State changed", event.target.getPlayerState());
     if (event.target.getPlayerState() === 5) {
       setvideoRef(event.target);
-      console.log("Video Ref Set")
+      console.log("Video Ref Set");
     }
   };
 
