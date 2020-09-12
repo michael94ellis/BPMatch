@@ -45,7 +45,7 @@ input:valid input:invalid {
   height: 40px;
   background-color: #282828;
   color: white;
-  border-width: 0px 0px 1px 0px;
+  border-width: 0px 0px 2px 0px;
   border-color: white;
 }
 
@@ -60,7 +60,7 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   background-color: #282828;
   color: white;
-  border-width: 0px 0px 1px 0px;
+  border-width: 0px 0px 2px 0px;
   border-color: white;
   -webkit-text-fill-color: white;
   -webkit-box-shadow: 0 0 0 0 ;
@@ -85,5 +85,10 @@ select:-webkit-autofill:focus {
 }
 
 .bpm-logo-height {
+  height: 44px;
+}
+
+.search-button {
   height: 40px;
+  width: 75px;
 }
