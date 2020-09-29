@@ -3,14 +3,17 @@ import UserInput from "./components/UserInput";
 import VideoPlayer from "./components/videoPlayer";
 import Switch from "react-switch";
 import "./App.css";
-import YouTube from "react-youtube";
 import { Container, Row, Col } from "react-bootstrap"
 import API from "./utils/API";
 
 const App = () => {
   const [search, setSearch] = useState("");
-  const [audioID, setAudioID] = useState("KQ6zr6kCPj8");
-  const [videoID, setVideoID] = useState("UV1MTZVQYoE");
+  const [audioID, setAudioID] = useState("");
+  const [videoID, setVideoID] = useState("");
+  const [audioRef, setAudioRef] = useState(null);
+  const [videoRef, setVideoRef] = useState(null);
+
+  let audioSwitched = false;
 
   const handleChange = (event) => {
     setSearch(event.target.value);
@@ -63,11 +66,6 @@ const App = () => {
     });
   };
 
-
-  const [audioRef, setAudioRef] = useState(null);
-  const [videoRef, setvideoRef] = useState(null);
-
-  let audioSwitched = false;
   const switchVideoAudio = () => {
     audioSwitched = !audioSwitched;
     if (audioRef != null && videoRef != null) {
@@ -92,26 +90,39 @@ const App = () => {
   const videoStateChange = (event) => {
     console.log("State changed", event.target.getPlayerState());
     if (event.target.getPlayerState() === 5) {
-      setvideoRef(event.target);
+      setVideoRef(event.target);
       console.log("Video Ref Set");
     }
   };
 
   useEffect(() => {
-    console.log("Audio Ready: " + (audioRef == null) + ", Video Ready: " + (videoRef == null));
-    if (audioRef != null && videoRef != null) {
-      console.log("Beginning videos");
-      videoRef.playVideo();
-      audioRef.playVideo();
-      switchVideoAudio();
+    console.log("Audio Ready: " + (audioRef != null) + ", Video Ready: " + (videoRef != null));
+    if (audioRef == null && audioID != null && videoRef == null && videoID != null) {
+      setAudioID("zIh5AHxh-Ok");
+      setVideoID("UV1MTZVQYoE");
     }
   });
+
+  let isPlayingMedia = false
+  function playAudioAndVideo() {
+    if (audioRef != null && videoRef != null) {
+      console.log("Beginning videos");
+      isPlayingMedia = !isPlayingMedia
+      if (isPlayingMedia) {
+        videoRef.pauseVideo();
+        audioRef.pauseVideo();
+      } else {
+        videoRef.playVideo();
+        audioRef.playVideo();
+      }
+    }
+  }
 
   const videoPlayer = <VideoPlayer
     id={videoID}
     opts={{
-      height: "180",
-      width: "50%",
+      height: "360",
+      width: "100%",
       playerVars: { autoplay: 0 }
     }}
     stateChange={videoStateChange}
@@ -126,6 +137,7 @@ const App = () => {
     stateChange={audioStateChange}
   />
 
+
   return (
     <div>
       <Container>
@@ -134,13 +146,20 @@ const App = () => {
             <UserInput
               handleSubmit={handleSubmit}
               handleChange={handleChange}
+              playVideoAndAudio={playAudioAndVideo}
               results={search}
             />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
             {audioPlayer}
           </Col>
+          {/* Switch Audio */}
+          {/* <Switch
+              onChange={switchVideoAudio}
+              checked={audioSwitched} /> */}
           <Col>
-            Switch Audio
-            <Switch onChange={switchVideoAudio} checked={audioSwitched} />
             {videoPlayer}
           </Col>
         </Row>
@@ -150,3 +169,4 @@ const App = () => {
 };
 
 export default App;
+

@@ -76,7 +76,7 @@ select:-webkit-autofill:focus {
 }
 
 .horizontal-box {
-  display: flex;
+  /* display: flex; */
   flex-direction: row;
 }
 
