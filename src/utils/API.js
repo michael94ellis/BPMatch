@@ -17,7 +17,6 @@ export default {
     );
   },
   musicVideoSearch: function (artist, song) {
-    console.log("TEST",artist, song)
     return axios({
       method: "GET",
       url: `https://imvdb.com/api/v1/search/videos?q=${artist} ${song}`,

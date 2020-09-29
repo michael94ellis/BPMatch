@@ -1,6 +1,6 @@
 {
   "name": "bpmatch",
-  "homepage": "https://michael94ellis.github.com/michael94ellis/BPMatch",
+  "homepage": "http://michael94ellis.github.com/michael94ellis/BPMatch",
   "version": "0.1.0",
   "proxy": "http://localhost:3001",
   "private": true,

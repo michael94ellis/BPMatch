@@ -3,13 +3,14 @@ import UserInput from "./components/UserInput";
 import VideoPlayer from "./components/videoPlayer";
 import Switch from "react-switch";
 import "./App.css";
+import YouTube from "react-youtube";
 import { Container, Row, Col } from "react-bootstrap"
 import API from "./utils/API";
 
 const App = () => {
   const [search, setSearch] = useState("");
-  const [audioID, setAudioID] = useState();
-  const [videoID, setVideoID] = useState();
+  const [audioID, setAudioID] = useState("KQ6zr6kCPj8");
+  const [videoID, setVideoID] = useState("UV1MTZVQYoE");
 
   const handleChange = (event) => {
     setSearch(event.target.value);
@@ -106,16 +107,24 @@ const App = () => {
     }
   });
 
-  const videoPlayer = <VideoPlayer id={videoID} stateChange={videoStateChange} opts={{
-    height: "180",
-    width: "50%",
-    playerVars: { autoplay: 0 }
-  }} />
-  const audioPlayer = <VideoPlayer id={audioID} stateChange={audioStateChange} opts={{
-    height: "360",
-    width: "100%",
-    playerVars: { autoplay: 0 }
-  }} />
+  const videoPlayer = <VideoPlayer
+    id={videoID}
+    opts={{
+      height: "180",
+      width: "50%",
+      playerVars: { autoplay: 0 }
+    }}
+    stateChange={videoStateChange}
+  />
+  const audioPlayer = <VideoPlayer
+    id={audioID}
+    opts={{
+      height: "360",
+      width: "100%",
+      playerVars: { autoplay: 0 }
+    }}
+    stateChange={audioStateChange}
+  />
 
   return (
     <div>
