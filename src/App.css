@@ -92,3 +92,8 @@ select:-webkit-autofill:focus {
   height: 40px;
   width: 75px;
 }
+
+.player-control {
+  height: 40px;
+  width: 110px;
+}

@@ -22,7 +22,10 @@ const UserInput = (props) => {
       </Row>
       <Row>
         <Col>
-          <input type="button" value="Play/Pause" className='search-button' onClick={props.playVideoAndAudio} />
+          <input type="button" value="Play/Pause" className='player-control' onClick={props.playVideoAndAudio} disabled={props.playbackDisabled} />
+        </Col>
+        <Col>
+          <input type="button" value="Switch Audio" className='player-control' onClick={props.switchVideoAudio} />
         </Col>
       </Row>
     </Container>

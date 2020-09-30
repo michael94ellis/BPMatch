@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserInput from "./components/UserInput";
 import VideoPlayer from "./components/videoPlayer";
-import Switch from "react-switch";
 import "./App.css";
 import { Container, Row, Col } from "react-bootstrap"
 import API from "./utils/API";
@@ -12,6 +11,7 @@ const App = () => {
   const [videoID, setVideoID] = useState("");
   const [audioRef, setAudioRef] = useState(null);
   const [videoRef, setVideoRef] = useState(null);
+  const [playbackDisabled, setPlaybackDisabled] = useState(true);
 
   let audioSwitched = false;
 
@@ -69,13 +69,17 @@ const App = () => {
   const switchVideoAudio = () => {
     audioSwitched = !audioSwitched;
     if (audioRef != null && videoRef != null) {
-      if (audioSwitched) {
-        audioRef.unMute();
-        videoRef.mute();
-      } else {
-        videoRef.unMute();
-        audioRef.mute();
-      }
+      handleMuting();
+    }
+  }
+
+  const handleMuting = () => {
+    if (audioSwitched) {
+      audioRef.unMute();
+      videoRef.mute();
+    } else {
+      videoRef.unMute();
+      audioRef.mute();
     }
   }
 
@@ -98,8 +102,11 @@ const App = () => {
   useEffect(() => {
     console.log("Audio Ready: " + (audioRef != null) + ", Video Ready: " + (videoRef != null));
     if (audioRef == null && audioID != null && videoRef == null && videoID != null) {
-      setAudioID("zIh5AHxh-Ok");
-      setVideoID("UV1MTZVQYoE");
+      setVideoID("zIh5AHxh-Ok");
+      setAudioID("UV1MTZVQYoE");
+    }
+    if (audioRef != null && videoRef != null) {
+      setPlaybackDisabled(false);
     }
   });
 
@@ -107,14 +114,15 @@ const App = () => {
   function playAudioAndVideo() {
     if (audioRef != null && videoRef != null) {
       console.log("Beginning videos");
-      isPlayingMedia = !isPlayingMedia
       if (isPlayingMedia) {
         videoRef.pauseVideo();
         audioRef.pauseVideo();
       } else {
+        handleMuting();
         videoRef.playVideo();
         audioRef.playVideo();
       }
+      isPlayingMedia = !isPlayingMedia
     }
   }
 
@@ -148,6 +156,8 @@ const App = () => {
               handleChange={handleChange}
               playVideoAndAudio={playAudioAndVideo}
               results={search}
+              playbackDisabled={playbackDisabled}
+              switchVideoAudio={switchVideoAudio}
             />
           </Col>
         </Row>
@@ -155,10 +165,6 @@ const App = () => {
           <Col>
             {audioPlayer}
           </Col>
-          {/* Switch Audio */}
-          {/* <Switch
-              onChange={switchVideoAudio}
-              checked={audioSwitched} /> */}
           <Col>
             {videoPlayer}
           </Col>
