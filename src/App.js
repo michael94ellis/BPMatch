@@ -84,23 +84,52 @@ const App = () => {
   }
 
   const audioStateChange = (event) => {
-    console.log("State changed", event.target.getPlayerState());
+    console.log("Audio State changed", event.target.getPlayerState());
+    // Playing
+    if (event.target.getPlayerState() === 1) {
+      videoRef.playVideo();
+    }
+    // Pause
+    if (event.target.getPlayerState() === 2) {
+      videoRef.pauseVideo();
+    }
+    // Buffering
+    if (event.target.getPlayerState() === 3) {
+      videoRef.seekTo(audioRef.getCurrentTime(), true);
+      // audioRef.pauseVideo();
+      // console.log(event.target.getCurrentTime())
+      // audioRef.playVideoAt(event.target.getCurrentTime());
+    }
+    // Loaded
     if (event.target.getPlayerState() === 5) {
       setAudioRef(event.target);
-      console.log("Audio Ref Set");
     }
   };
 
   const videoStateChange = (event) => {
-    console.log("State changed", event.target.getPlayerState());
+    console.log("Video State changed", event.target.getPlayerState());
+    // Playing
+    if (event.target.getPlayerState() === 1) {
+      audioRef.playVideo();
+    }
+    // Pause
+    if (event.target.getPlayerState() === 2) {
+      audioRef.pauseVideo();
+    }
+    // Buffering
+    if (event.target.getPlayerState() === 3) {
+      audioRef.seekTo(videoRef.getCurrentTime(), true);
+      // videoRef.pauseVideo();
+      // console.log(event.target.getCurrentTime())
+      // videoRef.playVideoAt(event.target.getCurrentTime());
+    }
+    // Loaded
     if (event.target.getPlayerState() === 5) {
       setVideoRef(event.target);
-      console.log("Video Ref Set");
     }
   };
 
-  useEffect(() => {
-    console.log("Audio Ready: " + (audioRef != null) + ", Video Ready: " + (videoRef != null));
+  const handlePlayback = () => {
     if (audioRef == null && audioID != null && videoRef == null && videoID != null) {
       setVideoID("zIh5AHxh-Ok");
       setAudioID("UV1MTZVQYoE");
@@ -108,6 +137,11 @@ const App = () => {
     if (audioRef != null && videoRef != null) {
       setPlaybackDisabled(false);
     }
+  }
+
+  useEffect(() => {
+    console.log("Audio Ready: " + (audioRef != null) + ", Video Ready: " + (videoRef != null));
+    handlePlayback();
   });
 
   let isPlayingMedia = false
